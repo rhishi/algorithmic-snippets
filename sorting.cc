@@ -41,16 +41,13 @@ void QuickSort(int array[], int left, int right) {
         if (array[i] <= array[right]) { i++; }
         else { Swap(array, i, j); j--; }
     }
-
     // Always: before, during, and after the loop:
     // to the left of i are all elements smaller than or equal to the pivot element
     // to the right of j are all elements bigger than the pivot element
     // i..j are the unprocessed elements
     // When the loop ends, i == j + 1
-    // So,
-    // left..i-1 are smaller-or-equal elements
-    // i..right-1 are greater elements
-    // So, put the pivot in the middle, and invoke recursively on the two halves
+
+    // Put the pivot in the middle, and invoke recursively on the two halves
     Swap(array, i, right);
     QuickSort(array, left, i - 1);
     QuickSort(array, i + 1, right);
