@@ -57,9 +57,9 @@ void QuickSortTest2() {
     }
 
     for (int i = 0; i < count; i++) {
-        delete arrays[i];
+        delete[] arrays[i];
         arrays[i] = NULL;
     }
-    delete arrays;
+    delete[] arrays;
     arrays = NULL;
 }

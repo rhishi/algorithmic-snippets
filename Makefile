@@ -1,5 +1,6 @@
 
 CXX = g++-7
+CXXFLAGS = -Wall
 
 MAINS = sorting_main
 
@@ -9,7 +10,7 @@ clean :
 	rm -f *.o $(MAINS)
 
 %_main : %_main.o %.o
-	$(CXX) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 %.o : %.cc %.h
-	$(CXX) -c $<
+	$(CXX) $(CXXFLAGS) -c $<
