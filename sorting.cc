@@ -19,19 +19,61 @@ void Swap(int array[], int i, int j) {
     array[j] = temp;
 }
 
-// -----------------------------------------------------------------
-// QuickSort
+// -----------------------------------------------------------------------------
+// QuickSort variants
 
-void QuickSort(int array[], int left, int right);
+void QuickSortMiddle(int array[], int left, int right);
+void QuickSortLeft(int array[], int left, int right);
+void QuickSortRight(int array[], int left, int right);
+int Partition(int array[], int left, int pivot, int right);
 
 void QuickSort(int array[], int size) {
-    QuickSort(array, 0, size - 1);
+    QuickSortMiddle(array, 0, size - 1);
 }
 
-void QuickSort(int array[], int left, int right) {
+void QuickSortMiddle(int array[], int size) {
+    QuickSortMiddle(array, 0, size - 1);
+}
+
+void QuickSortMiddle(int array[], int left, int right) {
     if (left >= right) return;
 
     int pivot = left + (right - left) / 2;
+    pivot = Partition(array, left, pivot, right);
+
+    QuickSortMiddle(array, left, pivot - 1);
+    QuickSortMiddle(array, pivot + 1, right);
+}
+
+void QuickSortLeft(int array[], int size) {
+    QuickSortLeft(array, 0, size - 1);
+}
+
+void QuickSortLeft(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left;
+    pivot = Partition(array, left, pivot, right);
+
+    QuickSortLeft(array, left, pivot - 1);
+    QuickSortLeft(array, pivot + 1, right);
+}
+
+void QuickSortRight(int array[], int size) {
+    QuickSortRight(array, 0, size - 1);
+}
+
+void QuickSortRight(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = right;
+    pivot = Partition(array, left, pivot, right);
+
+    QuickSortRight(array, left, pivot - 1);
+    QuickSortRight(array, pivot + 1, right);
+}
+
+int Partition(int array[], int left, int pivot, int right) {
     Swap(array, pivot, right);
 
     int i = left;
@@ -47,8 +89,7 @@ void QuickSort(int array[], int left, int right) {
     // i..j are the unprocessed elements
     // When the loop ends, i == j + 1
 
-    // Put the pivot in the middle, and invoke recursively on the two halves
+    // Put the pivot in the middle, and return the pivot position
     Swap(array, i, right);
-    QuickSort(array, left, i - 1);
-    QuickSort(array, i + 1, right);
+    return i;
 }

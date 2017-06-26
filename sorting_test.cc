@@ -1,3 +1,4 @@
+#include <iostream>
 #include "sorting.h"
 #include "gtest/gtest.h"
 
@@ -56,6 +57,7 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
 
     // per-test-case set-up, called before the first test in the test case
     static void SetUpTestCase() {
+        std::cout << "Running SetUpTestCase" << std::endl;
         arrays_ = new int*[8] {
             new int[0] { },
             new int[1] { 1 },
@@ -72,6 +74,7 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
 
     // per-test-case tear-down, called after the last test in the test case
     static void TearDownTestCase() {
+        std::cout << "Running TearDownTestCase" << std::endl;
         for (int i = 0; i < count_; i++) {
             delete[] arrays_[i];
             arrays_[i] = NULL;
@@ -109,7 +112,15 @@ int** SortTestWithExamples::arrays_ = NULL;
 int* SortTestWithExamples::sizes_ = NULL;
 int SortTestWithExamples::count_ = 0;
 
-TEST_P(SortTestWithExamples, QuickSortWorksOnExample) {
+// ------------------------------------
+// QuickSort tests using examples
+
+class QuickSortTest : public SortTestWithExamples {
+    // Nothing here; everything is in the base class.
+    // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
+};
+
+TEST_P(QuickSortTest, WorksOnExample) {
     int* array;
     int size;
     GetArrayAndSize(&array, &size);
@@ -117,7 +128,61 @@ TEST_P(SortTestWithExamples, QuickSortWorksOnExample) {
     EXPECT_TRUE(IsSorted(array, size));
 }
 
-INSTANTIATE_TEST_CASE_P(Instance, SortTestWithExamples, ::testing::Range(0, 8));
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortTest, ::testing::Range(0, 8));
+
+// ------------------------------------
+// QuickSortMiddle tests using examples
+
+class QuickSortMiddleTest : public SortTestWithExamples {
+    // Nothing here; everything is in the base class.
+    // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
+};
+
+TEST_P(QuickSortMiddleTest, WorksOnExample) {
+    int* array;
+    int size;
+    GetArrayAndSize(&array, &size);
+    QuickSortMiddle(array, size);
+    EXPECT_TRUE(IsSorted(array, size));
+}
+
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortMiddleTest, ::testing::Range(0, 8));
+
+// ------------------------------------
+// QuickSortLeft tests using examples
+
+class QuickSortLeftTest : public SortTestWithExamples {
+    // Nothing here; everything is in the base class.
+    // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
+};
+
+TEST_P(QuickSortLeftTest, WorksOnExample) {
+    int* array;
+    int size;
+    GetArrayAndSize(&array, &size);
+    QuickSortLeft(array, size);
+    EXPECT_TRUE(IsSorted(array, size));
+}
+
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortLeftTest, ::testing::Range(0, 8));
+
+// ------------------------------------
+// QuickSortRight tests using examples
+
+class QuickSortRightTest : public SortTestWithExamples {
+    // Nothing here; everything is in the base class.
+    // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
+};
+
+TEST_P(QuickSortRightTest, WorksOnExample) {
+    int* array;
+    int size;
+    GetArrayAndSize(&array, &size);
+    QuickSortRight(array, size);
+    EXPECT_TRUE(IsSorted(array, size));
+}
+
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortRightTest, ::testing::Range(0, 8));
 
 #else
 
