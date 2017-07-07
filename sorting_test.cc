@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "sorting.h"
 #include "gtest/gtest.h"
 
@@ -78,13 +79,13 @@ class SortTestWithStaticExamples : public ::testing::TestWithParam<int> {
         std::cout << "Running TearDownTestCase" << std::endl;
         for (int i = 0; i < count_; i++) {
             delete[] arrays_[i];
-            arrays_[i] = NULL;
+            arrays_[i] = nullptr;
         }
         delete[] arrays_;
-        arrays_ = NULL;
+        arrays_ = nullptr;
 
         delete[] sizes_;
-        sizes_ = NULL;
+        sizes_ = nullptr;
 
         count_ = 0;
     }
@@ -109,8 +110,8 @@ class SortTestWithStaticExamples : public ::testing::TestWithParam<int> {
 
 // Remember how C++ works: static members need to be brought into existence
 // by declaring them outside the class declaration.  Else, the linker complains.
-int** SortTestWithStaticExamples::arrays_ = NULL;
-int* SortTestWithStaticExamples::sizes_ = NULL;
+int** SortTestWithStaticExamples::arrays_ = nullptr;
+int* SortTestWithStaticExamples::sizes_ = nullptr;
 int SortTestWithStaticExamples::count_ = 0;
 
 // ------------------------------------
@@ -248,6 +249,8 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
     // virtual void TearDown() will be called after each test is run.
     virtual void TearDown() {
         example_.clear();
+        array_ = nullptr;
+        size_ = 0;
     }
 
     std::vector<int> example_;
@@ -285,6 +288,106 @@ TEST_P(SortTestWithExamples, QuickSortRight) {
 }
 
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 9));
+
+// -----------------------------------------------------------------------------
+
+struct Pattern {
+    std::string name;
+    int size;
+};
+
+class SortTestWithPatterns : public ::testing::TestWithParam<Pattern> {
+  protected:
+
+    virtual void SetUp() {
+        auto pattern = GetParam();
+        example_ = std::vector<int>(pattern.size);
+
+        if (pattern.name == "ascending") {
+            for (int i = 0; i < pattern.size; i++) {
+                example_[i] = i;
+            }
+        } else if (pattern.name == "descending") {
+            for (int i = 0; i < pattern.size; i++) {
+                example_[i] = pattern.size - 1 - i;
+            }
+        } else if (pattern.name == "constant") {
+            for (int i = 0; i < pattern.size; i++) {
+                example_[i] = pattern.size;
+            }
+        }
+
+        array_ = example_.data();
+        size_ = example_.size();
+    }
+
+    virtual void TearDown() {
+        example_.clear();
+        array_ = nullptr;
+        size_ = 0;
+    }
+
+    std::vector<int> example_;
+    int* array_;
+    int size_;
+};
+
+TEST_P(SortTestWithPatterns, QuickSort) {
+    QuickSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortMiddle) {
+    QuickSortMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortLeft) {
+    QuickSortLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortRight) {
+    QuickSortRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+const Pattern constant_patterns[] = {
+    { "constant", 100 },
+    { "constant", 1000 },
+    { "constant", 10000 },
+    { "constant", 20000 },
+    { "constant", 30000 },
+    { "constant", 40000 },
+    { "constant", 50000 }
+};
+
+const Pattern ascending_patterns[] = {
+    { "ascending", 100 },
+    { "ascending", 1000 },
+    { "ascending", 10000 },
+    { "ascending", 20000 },
+    { "ascending", 30000 },
+    { "ascending", 40000 },
+    { "ascending", 50000 }
+};
+
+const Pattern descending_patterns[] = {
+    { "descending", 100 },
+    { "descending", 1000 },
+    { "descending", 10000 },
+    { "descending", 20000 },
+    { "descending", 30000 },
+    { "descending", 40000 },
+    { "descending", 50000 }
+};
+
+INSTANTIATE_TEST_CASE_P(Constant, SortTestWithPatterns,
+    ::testing::ValuesIn(constant_patterns));
+INSTANTIATE_TEST_CASE_P(Ascending, SortTestWithPatterns,
+    ::testing::ValuesIn(ascending_patterns));
+INSTANTIATE_TEST_CASE_P(Descending, SortTestWithPatterns,
+    ::testing::ValuesIn(descending_patterns));
 
 #else
 
