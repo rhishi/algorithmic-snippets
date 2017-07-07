@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "sorting.h"
 #include "gtest/gtest.h"
 
@@ -47,10 +48,9 @@ TEST(QuickSortTest, SmallExample) {
 
 // Derive from ::testing::TestWithParam<T>, which in turn derives from
 // ::testing::Test and ::testing::WithParamInterface<T>.
-class SortTestWithExamples : public ::testing::TestWithParam<int> {
+class SortTestWithStaticExamples : public ::testing::TestWithParam<int> {
     // You can implement all the usual fixture class members here.
-    // To access the test parameter, call GetParam() from class
-    // TestWithParam<T>.
+    // To access the test parameter, call GetParam() from class TestWithParam<T>.
 
   public:
     // the static functions, SetUpTestCase and TearDownTestCase, must be public.
@@ -109,14 +109,14 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
 
 // Remember how C++ works: static members need to be brought into existence
 // by declaring them outside the class declaration.  Else, the linker complains.
-int** SortTestWithExamples::arrays_ = NULL;
-int* SortTestWithExamples::sizes_ = NULL;
-int SortTestWithExamples::count_ = 0;
+int** SortTestWithStaticExamples::arrays_ = NULL;
+int* SortTestWithStaticExamples::sizes_ = NULL;
+int SortTestWithStaticExamples::count_ = 0;
 
 // ------------------------------------
 // QuickSort tests using examples
 
-class QuickSortTest : public SortTestWithExamples {
+class QuickSortTest : public SortTestWithStaticExamples {
     // Nothing here; everything is in the base class.
     // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
 };
@@ -134,7 +134,7 @@ INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortTest, ::testing::Range(0, 9
 // ------------------------------------
 // QuickSortMiddle tests using examples
 
-class QuickSortMiddleTest : public SortTestWithExamples {
+class QuickSortMiddleTest : public SortTestWithStaticExamples {
     // Nothing here; everything is in the base class.
     // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
 };
@@ -152,7 +152,7 @@ INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortMiddleTest, ::testing::Rang
 // ------------------------------------
 // QuickSortLeft tests using examples
 
-class QuickSortLeftTest : public SortTestWithExamples {
+class QuickSortLeftTest : public SortTestWithStaticExamples {
     // Nothing here; everything is in the base class.
     // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
 };
@@ -170,7 +170,7 @@ INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortLeftTest, ::testing::Range(
 // ------------------------------------
 // QuickSortRight tests using examples
 
-class QuickSortRightTest : public SortTestWithExamples {
+class QuickSortRightTest : public SortTestWithStaticExamples {
     // Nothing here; everything is in the base class.
     // Defined in order to trigger fresh invocations of SetUpTestCase, TearDownTestCase.
 };
@@ -184,6 +184,107 @@ TEST_P(QuickSortRightTest, WorksOnExample) {
 }
 
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortRightTest, ::testing::Range(0, 9));
+
+//------------------------------------------------------------------------------
+
+// SortTestWithStaticExamples is a parameterized test fixture, as exhibited above.
+// But it has a problem: one can't write multiple TEST_P tests using the test
+// fixture.  That's because the example arrays are static, and tests access them
+// directly.  So if one test sorts the array, the second test would get that
+// sorted array and not the original version.
+//
+// The workaround as done above is:
+// 1. derive an empty sub-fixture from the base fixture,
+// 2. have exactly one TEST_P defined for that sub-fixture, and then
+// 3. instantiate the test for a range of indices.
+//
+// But a better solution is to give each test a fresh copy of the static example.
+// This parameterized test fixture achieves that.
+//
+// Derive from ::testing::TestWithParam<T>, which in turn derives from
+// ::testing::Test and ::testing::WithParamInterface<T>.
+class SortTestWithExamples : public ::testing::TestWithParam<int> {
+    // You can implement all the usual fixture class members here.
+    // To access the test parameter, call GetParam() from class TestWithParam<T>.
+
+  public:
+    // the static functions, SetUpTestCase and TearDownTestCase, must be public.
+
+    // per-test-case set-up, called before the first test in the test case
+    static void SetUpTestCase() {
+        std::cout << "Running SetUpTestCase" << std::endl;
+        examples_ = std::vector<std::vector<int>> {
+            std::vector<int> { },
+            std::vector<int> { 1 },
+            std::vector<int> { 1, 2 },
+            std::vector<int> { 2, 1 },
+            std::vector<int> { 1, 2, 3 },
+            std::vector<int> { 1, 3, 2 },
+            std::vector<int> { 3, 2, 1 },
+            std::vector<int> { 7, 2, 3, 2, 4, 9, 7, 8, 9, 10 },
+            std::vector<int> { 3, 4, 1, 0, 6, 7, 8, -1, 10, 8, 1, -2 }
+        };
+    }
+
+    // per-test-case tear-down, called after the last test in the test case
+    static void TearDownTestCase() {
+        std::cout << "Running TearDownTestCase" << std::endl;
+        examples_.clear();
+    }
+
+  protected:
+    // protected members are accessible in bodies of individual tests that use
+    // this test fixture (or any derived sub-fixtures).
+
+    // virtual void SetUp() will be called before each test is run.
+    virtual void SetUp() {
+        int index = GetParam();
+        example_ = std::vector<int>{examples_[index]};
+
+        array_ = example_.data();
+        size_ = example_.size();
+    }
+
+    // virtual void TearDown() will be called after each test is run.
+    virtual void TearDown() {
+        example_.clear();
+    }
+
+    std::vector<int> example_;
+    int* array_;
+    int size_;
+
+  private:
+    // data members could be private to keep them away from derived fixtures,
+    // or bodies of individual tests that use this fixture.
+    static std::vector<std::vector<int>> examples_;
+};
+
+// Remember how C++ works: static members need to be brought into existence
+// by declaring them outside the class declaration.  Else, the linker complains.
+std::vector<std::vector<int>> SortTestWithExamples::examples_;
+
+TEST_P(SortTestWithExamples, QuickSort) {
+    QuickSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortMiddle) {
+    QuickSortMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortLeft) {
+    QuickSortLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortRight) {
+    QuickSortRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 9));
 
 #else
 
