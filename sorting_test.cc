@@ -58,7 +58,7 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
     // per-test-case set-up, called before the first test in the test case
     static void SetUpTestCase() {
         std::cout << "Running SetUpTestCase" << std::endl;
-        arrays_ = new int*[8] {
+        arrays_ = new int*[9] {
             new int[0] { },
             new int[1] { 1 },
             new int[2] { 1, 2 },
@@ -66,10 +66,11 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
             new int[3] { 1, 2, 3 },
             new int[3] { 1, 3, 2 },
             new int[3] { 3, 2, 1 },
-            new int[10] { 7, 2, 3, 2, 4, 9, 7, 8, 9, 10 }
+            new int[10] { 7, 2, 3, 2, 4, 9, 7, 8, 9, 10 },
+            new int[12] { 3, 4, 1, 0, 6, 7, 8, -1, 10, 8, 1, -2 }
         };
-        sizes_ = new int[8] { 0, 1, 2, 2, 3, 3, 3, 10 };
-        count_ = 8;
+        sizes_ = new int[9] { 0, 1, 2, 2, 3, 3, 3, 10, 12 };
+        count_ = 9;
     }
 
     // per-test-case tear-down, called after the last test in the test case
@@ -128,7 +129,7 @@ TEST_P(QuickSortTest, WorksOnExample) {
     EXPECT_TRUE(IsSorted(array, size));
 }
 
-INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortTest, ::testing::Range(0, 8));
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortTest, ::testing::Range(0, 9));
 
 // ------------------------------------
 // QuickSortMiddle tests using examples
@@ -146,7 +147,7 @@ TEST_P(QuickSortMiddleTest, WorksOnExample) {
     EXPECT_TRUE(IsSorted(array, size));
 }
 
-INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortMiddleTest, ::testing::Range(0, 8));
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortMiddleTest, ::testing::Range(0, 9));
 
 // ------------------------------------
 // QuickSortLeft tests using examples
@@ -164,7 +165,7 @@ TEST_P(QuickSortLeftTest, WorksOnExample) {
     EXPECT_TRUE(IsSorted(array, size));
 }
 
-INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortLeftTest, ::testing::Range(0, 8));
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortLeftTest, ::testing::Range(0, 9));
 
 // ------------------------------------
 // QuickSortRight tests using examples
@@ -182,7 +183,7 @@ TEST_P(QuickSortRightTest, WorksOnExample) {
     EXPECT_TRUE(IsSorted(array, size));
 }
 
-INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortRightTest, ::testing::Range(0, 8));
+INSTANTIATE_TEST_CASE_P(InstantiateOnRange, QuickSortRightTest, ::testing::Range(0, 9));
 
 #else
 
