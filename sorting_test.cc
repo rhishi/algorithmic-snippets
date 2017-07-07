@@ -61,11 +61,11 @@ class SortTestWithExamples : public ::testing::TestWithParam<int> {
         arrays_ = new int*[8] {
             new int[0] { },
             new int[1] { 1 },
-            new int[2] { 1, 2},
-            new int[2] { 2, 1},
-            new int[3] { 1, 2, 3},
-            new int[3] { 1, 3, 2},
-            new int[3] { 3, 2, 1},
+            new int[2] { 1, 2 },
+            new int[2] { 2, 1 },
+            new int[3] { 1, 2, 3 },
+            new int[3] { 1, 3, 2 },
+            new int[3] { 3, 2, 1 },
             new int[10] { 7, 2, 3, 2, 4, 9, 7, 8, 9, 10 }
         };
         sizes_ = new int[8] { 0, 1, 2, 2, 3, 3, 3, 10 };
