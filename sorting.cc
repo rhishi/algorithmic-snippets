@@ -164,3 +164,47 @@ int PartitionLomutoCLRS(int array[], int left, int pivot, int right) {
     Swap(array, ++i, right);
     return i;
 }
+
+// --------------------------------------
+
+void QuickSortLomutoCLRSEqualityFixMiddle(int array[], int left, int right);
+int PartitionLomutoCLRSEqualityFix(int array[], int left, int pivot, int right);
+
+void QuickSortLomutoCLRSEqualityFixMiddle(int array[], int size) {
+    QuickSortLomutoCLRSEqualityFixMiddle(array, 0, size - 1);
+}
+
+void QuickSortLomutoCLRSEqualityFixMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left + (right - left) / 2;
+    pivot = PartitionLomutoCLRSEqualityFix(array, left, pivot, right);
+
+    QuickSortLomutoCLRSEqualityFixMiddle(array, left, pivot - 1);
+    QuickSortLomutoCLRSEqualityFixMiddle(array, pivot + 1, right);
+}
+
+int PartitionLomutoCLRSEqualityFix(int array[], int left, int pivot, int right) {
+    Swap(array, pivot, right);
+
+    int pivot_element = array[right];
+    int i = left - 1;
+
+    for (int j = left; j <= right - 1; j++)  {
+        if (array[j] <= pivot_element) {
+            Swap(array, ++i, j);
+        }
+        if (++j > right - 1) break;
+        if (array[j] < pivot_element) {
+            Swap(array, ++i, j);
+        }
+    }
+    // Always: before, during, and after the loop:
+    // left..i are all elements smaller than or equal to the pivot element
+    // i+1..j-1 are all elements bigger than or equal to the pivot element
+    // j..right-1 are the unprocessed elements
+
+    // Put the pivot in the middle, and return the pivot position
+    Swap(array, ++i, right);
+    return i;
+}

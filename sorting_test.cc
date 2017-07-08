@@ -291,6 +291,26 @@ TEST_P(SortTestWithExamples, QuickSortRight) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+TEST_P(SortTestWithExamples, QuickSortLomutoCLRSMiddle) {
+    QuickSortLomutoCLRSMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortLomutoCLRSLeft) {
+    QuickSortLomutoCLRSLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortLomutoCLRSRight) {
+    QuickSortLomutoCLRSRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortLomutoCLRSEqualityFixMiddle) {
+    QuickSortLomutoCLRSEqualityFixMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 13));
 
 // -----------------------------------------------------------------------------
@@ -378,6 +398,11 @@ TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSLeft) {
 
 TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSRight) {
     QuickSortLomutoCLRSRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSEqualityFixMiddle) {
+    QuickSortLomutoCLRSEqualityFixMiddle(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
