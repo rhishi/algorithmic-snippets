@@ -8,4 +8,8 @@ void QuickSortMiddle(int array[], int size);
 void QuickSortLeft(int array[], int size);
 void QuickSortRight(int array[], int size);
 
+void QuickSortLomutoCLRSMiddle(int array[], int size);
+void QuickSortLomutoCLRSLeft(int array[], int size);
+void QuickSortLomutoCLRSRight(int array[], int size);
+
 #endif // #ifndef SORTING_H_

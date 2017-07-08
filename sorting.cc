@@ -20,7 +20,7 @@ void Swap(int array[], int i, int j) {
 }
 
 // -----------------------------------------------------------------------------
-// QuickSort variants
+// QuickSort my first version
 
 void QuickSortMiddle(int array[], int left, int right);
 void QuickSortLeft(int array[], int left, int right);
@@ -91,5 +91,76 @@ int Partition(int array[], int left, int pivot, int right) {
 
     // Put the pivot in the middle, and return the pivot position
     Swap(array, i, right);
+    return i;
+}
+
+// -----------------------------------------------------------------------------
+// QuickSort as described in CLRS book (2nd edition).  Uses Lomuto partition.
+
+void QuickSortLomutoCLRSMiddle(int array[], int left, int right);
+void QuickSortLomutoCLRSLeft(int array[], int left, int right);
+void QuickSortLomutoCLRSRight(int array[], int left, int right);
+int PartitionLomutoCLRS(int array[], int left, int pivot, int right);
+
+void QuickSortLomutoCLRSMiddle(int array[], int size) {
+    QuickSortLomutoCLRSMiddle(array, 0, size - 1);
+}
+
+void QuickSortLomutoCLRSMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left + (right - left) / 2;
+    pivot = PartitionLomutoCLRS(array, left, pivot, right);
+
+    QuickSortLomutoCLRSMiddle(array, left, pivot - 1);
+    QuickSortLomutoCLRSMiddle(array, pivot + 1, right);
+}
+
+void QuickSortLomutoCLRSLeft(int array[], int size) {
+    QuickSortLomutoCLRSLeft(array, 0, size - 1);
+}
+
+void QuickSortLomutoCLRSLeft(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left;
+    pivot = PartitionLomutoCLRS(array, left, pivot, right);
+
+    QuickSortLomutoCLRSLeft(array, left, pivot - 1);
+    QuickSortLomutoCLRSLeft(array, pivot + 1, right);
+}
+
+void QuickSortLomutoCLRSRight(int array[], int size) {
+    QuickSortLomutoCLRSRight(array, 0, size - 1);
+}
+
+void QuickSortLomutoCLRSRight(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = right;
+    pivot = PartitionLomutoCLRS(array, left, pivot, right);
+
+    QuickSortLomutoCLRSRight(array, left, pivot - 1);
+    QuickSortLomutoCLRSRight(array, pivot + 1, right);
+}
+
+int PartitionLomutoCLRS(int array[], int left, int pivot, int right) {
+    Swap(array, pivot, right);
+
+    int pivot_element = array[right];
+    int i = left - 1;
+
+    for (int j = left; j <= right - 1; j++) {
+        if (array[j] <= pivot_element) {
+            Swap(array, ++i, j);
+        }
+    }
+    // Always: before, during, and after the loop:
+    // left..i are all elements smaller than or equal to the pivot element
+    // i+1..j-1 are all elements bigger than the pivot element
+    // j..right-1 are the unprocessed elements
+
+    // Put the pivot in the middle, and return the pivot position
+    Swap(array, ++i, right);
     return i;
 }

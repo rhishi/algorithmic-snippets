@@ -366,6 +366,21 @@ TEST_P(SortTestWithPatterns, QuickSortRight) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSMiddle) {
+    QuickSortLomutoCLRSMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSLeft) {
+    QuickSortLomutoCLRSLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSRight) {
+    QuickSortLomutoCLRSRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 const int sizes[] = { 100, 1000, 10000, 20000, 30000, 40000, 50000 };
 
 // One instantiation by combining an array of pattern names and an array of sizes
