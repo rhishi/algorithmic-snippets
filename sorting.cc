@@ -95,7 +95,7 @@ int Partition(int array[], int left, int pivot, int right) {
 }
 
 // -----------------------------------------------------------------------------
-// QuickSort as described in CLRS book (2nd edition).  Uses Lomuto partition.
+// QuickSort from the CLRS book (2nd and 3rd editions).  Uses Lomuto partition.
 
 void QuickSortLomutoCLRSMiddle(int array[], int left, int right);
 void QuickSortLomutoCLRSLeft(int array[], int left, int right);
@@ -166,6 +166,7 @@ int PartitionLomutoCLRS(int array[], int left, int pivot, int right) {
 }
 
 // --------------------------------------
+// Exercise 7.1-2: Modify Partition to return the middle when all elements are equal.
 
 void QuickSortLomutoCLRSEqualityFixMiddle(int array[], int left, int right);
 int PartitionLomutoCLRSEqualityFix(int array[], int left, int pivot, int right);
@@ -207,4 +208,252 @@ int PartitionLomutoCLRSEqualityFix(int array[], int left, int pivot, int right) 
     // Put the pivot in the middle, and return the pivot position
     Swap(array, ++i, right);
     return i;
+}
+
+// -----------------------------------------------------------------------------
+// Hoare Partition.  The original, much efficient, harder to understand, but
+// beautiful method of partitioning.
+
+void QuickSortHoareMiddle(int array[], int left, int right);
+void QuickSortHoareLeft(int array[], int left, int right);
+void QuickSortHoareRight(int array[], int left, int right);
+int PartitionHoare(int array[], int left, int pivot, int right);
+
+void QuickSortHoareMiddle(int array[], int size) {
+    QuickSortHoareMiddle(array, 0, size - 1);
+}
+
+void QuickSortHoareMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left + (right - left) / 2;
+    int partition = PartitionHoare(array, left, pivot, right);
+
+    QuickSortHoareMiddle(array, left, partition);
+    QuickSortHoareMiddle(array, partition + 1, right);
+}
+
+void QuickSortHoareLeft(int array[], int size) {
+    QuickSortHoareLeft(array, 0, size - 1);
+}
+
+void QuickSortHoareLeft(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left;
+    int partition = PartitionHoare(array, left, pivot, right);
+
+    QuickSortHoareLeft(array, left, partition);
+    QuickSortHoareLeft(array, partition + 1, right);
+}
+
+void QuickSortHoareRight(int array[], int size) {
+    QuickSortHoareRight(array, 0, size - 1);
+}
+
+void QuickSortHoareRight(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = right;
+    int partition = PartitionHoare(array, left, pivot, right);
+
+    QuickSortHoareRight(array, left, partition);
+    QuickSortHoareRight(array, partition + 1, right);
+}
+
+int PartitionHoare(int array[], int left, int pivot, int right) {
+    Swap(array, pivot, left);
+
+    int pivot_element = array[left];
+    int i = left - 1;
+    int j = right + 1;
+
+    // at the start of every iteration:
+    // left..i are less than or equal to the pivot element
+    // j..right are greater than or equal to the pivot element
+    // (i+1)..(j-1) are elements yet to be scanned.
+    // intential that the pivot element is included in the scan.
+
+    while(1) {
+        // no need for bounds check on i and j as they advance, because
+        // 1) in the first iteration, unscanned part contains the pivot element.
+        // 2) in the later iterations, i (j) cannot go past the old value of j (i).
+        do {
+            i++;
+        } while (array[i] < pivot_element);
+        do {
+            j--;
+        } while (array[j] > pivot_element);
+
+        // array[i] >= pivot element
+        // left..(i-1) are less than or equal to the pivot element.
+        // array[j] <= pivot element
+        // (j+1)..right are greater than or equal to the pivot element.
+
+        if (i >= j) break;
+
+        Swap(array, i, j);
+    }
+
+    // when the loop exits, exactly two possibilities:
+    // i == j or
+    // j + 1 == i
+
+    // In both the cases,
+    //   left..(i-1) and (j+1)..right are the two partitions to sort next.
+    // Turns out, we can partition as:
+    //   left..j and (j+1)..right
+    // with guarantee that none of the two partitions is empty (which otherwise
+    // would cause infinite recursion).
+    return j;
+}
+
+// --------------------------------------
+// Hoare Partition that returns two indices as partition dividers.
+
+// Sorts the elements at the three indices bringing the median at the middle index.
+void median_in_middle(int array[], int i, int j, int k) {
+    if (array[i] > array[j]) {
+        Swap(array, i, j);
+    }
+    if (array[j] > array[k]) {
+        Swap(array, j, k);
+    }
+    if (array[i] > array[j]) {
+        Swap(array, i, j);
+    }
+}
+
+// Finds the index of the median of three elements.
+// Does an insertion sort, with pretend-swaps.
+int median_index(int array[], int i, int j, int k) {
+    // i, j, k
+    if (array[i] > array[j]) {
+        // j, i, k;
+        if (array[i] > array[k]) {
+            // j, k, i
+            if (array[j] > array[k]) {
+                // k, j, i
+                return j;
+            }
+            else {
+                // j, k, i
+                return k;
+            }
+        } else {
+            // j, i, k
+            return i;
+        }
+    } else {
+        // i, j, k
+        if (array[j] > array[k]) {
+            // i, k, j
+            if (array[i] > array[k]) {
+                // k, i, j
+                return i;
+            } else {
+                // i, k, j
+                return k;
+            }
+        } else {
+            // i, j, k
+            return j;
+        }
+    }
+}
+
+void QuickSortHoareTwoMedianThreeInMiddle(int array[], int left, int right);
+void QuickSortHoareTwoMedianThree(int array[], int left, int right);
+void QuickSortHoareTwoMiddle(int array[], int left, int right);
+void PartitionHoareTwo(int array[], int left, int pivot, int right, int& partleft, int& partright);
+
+void QuickSortHoareTwoMedianThreeInMiddle(int array[], int size) {
+    QuickSortHoareTwoMedianThreeInMiddle(array, 0, size - 1);
+}
+
+void QuickSortHoareTwoMedianThreeInMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int middle = left + (right - left) / 2;
+    median_in_middle(array, left, middle, right);
+    int pivot = middle;
+    int partleft, partright;
+    PartitionHoareTwo(array, left, pivot, right, partleft, partright);
+
+    QuickSortHoareTwoMedianThreeInMiddle(array, left, partleft);
+    QuickSortHoareTwoMedianThreeInMiddle(array, partright, right);
+}
+
+void QuickSortHoareTwoMedianThree(int array[], int size) {
+    QuickSortHoareTwoMedianThree(array, 0, size - 1);
+}
+
+void QuickSortHoareTwoMedianThree(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int middle = left + (right - left) / 2;
+    int pivot = median_index(array, left, middle, right);
+    int partleft, partright;
+    PartitionHoareTwo(array, left, pivot, right, partleft, partright);
+
+    QuickSortHoareTwoMedianThree(array, left, partleft);
+    QuickSortHoareTwoMedianThree(array, partright, right);
+}
+
+void QuickSortHoareTwoMiddle(int array[], int size) {
+    QuickSortHoareTwoMiddle(array, 0, size - 1);
+}
+
+void QuickSortHoareTwoMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left + (right - left) / 2;
+    int partleft, partright;
+    PartitionHoareTwo(array, left, pivot, right, partleft, partright);
+
+    QuickSortHoareTwoMiddle(array, left, partleft);
+    QuickSortHoareTwoMiddle(array, partright, right);
+}
+
+void PartitionHoareTwo(int array[], int left, int pivot, int right, int& partleft, int& partright) {
+
+    int pivot_element = array[pivot];
+    int i = left - 1;
+    int j = right + 1;
+
+    // at the start of every iteration:
+    // left..i are less than or equal to the pivot element
+    // j..right are greater than or equal to the pivot element
+    // (i+1)..(j-1) are elements yet to be scanned.
+    // intential that the pivot element is included in the scan.
+
+    while(1) {
+        // no need for bounds check on i and j as they advance, because
+        // 1) in the first iteration, unscanned part contains the pivot element.
+        // 2) i (or j) cannot go past the old value of j (or i)
+        do {
+            i++;
+        } while (array[i] < pivot_element);
+        do {
+            j--;
+        } while (array[j] > pivot_element);
+
+        // array[i] >= pivot element
+        // left..(i-1) are less than or equal to the pivot element.
+        // array[j] <= pivot element
+        // (j+1)..right are greater than or equal to the pivot element.
+
+        if (i >= j) break;
+
+        Swap(array, i, j);
+    }
+
+    // when the loop exits, exactly two possibilities:
+    // i == j or
+    // j + 1 == i
+
+    // In both the cases,
+    //   left..(i-1) and (j+1)..right are the two partitions to sort next.
+    partleft = i - 1;
+    partright = j + 1;
 }

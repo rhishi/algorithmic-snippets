@@ -311,6 +311,36 @@ TEST_P(SortTestWithExamples, QuickSortLomutoCLRSEqualityFixMiddle) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+TEST_P(SortTestWithExamples, QuickSortHoareMiddle) {
+    QuickSortHoareMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortHoareLeft) {
+    QuickSortHoareLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortHoareRight) {
+    QuickSortHoareRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortHoareTwoMiddle) {
+    QuickSortHoareTwoMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortHoareTwoMedianThree) {
+    QuickSortHoareTwoMedianThree(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, QuickSortHoareTwoMedianThreeInMiddle) {
+    QuickSortHoareTwoMedianThreeInMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 13));
 
 // -----------------------------------------------------------------------------
@@ -403,6 +433,36 @@ TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSRight) {
 
 TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSEqualityFixMiddle) {
     QuickSortLomutoCLRSEqualityFixMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareMiddle) {
+    QuickSortHoareMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareLeft) {
+    QuickSortHoareLeft(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareRight) {
+    QuickSortHoareRight(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareTwoMiddle) {
+    QuickSortHoareTwoMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareTwoMedianThree) {
+    QuickSortHoareTwoMedianThree(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortHoareTwoMedianThreeInMiddle) {
+    QuickSortHoareTwoMedianThreeInMiddle(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
