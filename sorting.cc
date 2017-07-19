@@ -210,6 +210,51 @@ int PartitionLomutoCLRSEqualityFix(int array[], int left, int pivot, int right) 
 }
 
 // -----------------------------------------------------------------------------
+// QuickSort from the K&R book (2nd edition).  Uses Lomuto partition.
+// K&R says: Our version of quicksort is not the fastest possible, but it's one
+// of the simplest.
+
+void QuickSortLomutoKRMiddle(int array[], int left, int right);
+int PartitionLomutoKR(int array[], int left, int pivot, int right);
+
+void QuickSortLomutoKRMiddle(int array[], int size) {
+    QuickSortLomutoKRMiddle(array, 0, size - 1);
+}
+
+void QuickSortLomutoKRMiddle(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = left + (right - left) / 2;
+    pivot = PartitionLomutoKR(array, left, pivot, right);
+
+    QuickSortLomutoKRMiddle(array, left, pivot - 1);
+    QuickSortLomutoKRMiddle(array, pivot + 1, right);
+}
+
+// K&R Lomuto Partition swaps the pivot to the left, and partitions left+1..right.
+// CLRS Lomuto Partition swaps the pivot to the right, and partitions left..right-1.
+int PartitionLomutoKR(int array[], int left, int pivot, int right) {
+    Swap(array, left, pivot);
+
+    int pivot_element = array[left];
+    int i = left;
+
+    for (int j = left + 1; j <= right; j++) {
+        if (array[j] < pivot_element) {
+            Swap(array, ++i, j);
+        }
+    }
+    // Always: before, during, and after the loop:
+    // left+1..i are all elements smaller than the pivot element
+    // i+1..j-1 are all elements bigger than or equal to the pivot element
+    // j..right are the unprocessed elements
+
+    // Put the pivot in the middle, and return the pivot position
+    Swap(array, left, i);
+    return i;
+}
+
+// -----------------------------------------------------------------------------
 // Hoare Partition.  The original, much efficient, harder to understand, but
 // beautiful method of partitioning.
 

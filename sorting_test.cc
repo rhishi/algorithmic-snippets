@@ -311,6 +311,11 @@ TEST_P(SortTestWithExamples, QuickSortLomutoCLRSEqualityFixMiddle) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+TEST_P(SortTestWithExamples, QuickSortLomutoKRMiddle) {
+    QuickSortLomutoKRMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 TEST_P(SortTestWithExamples, QuickSortHoareMiddle) {
     QuickSortHoareMiddle(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
@@ -465,6 +470,11 @@ TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSRight) {
 
 TEST_P(SortTestWithPatterns, QuickSortLomutoCLRSEqualityFixMiddle) {
     QuickSortLomutoCLRSEqualityFixMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, QuickSortLomutoKRMiddle) {
+    QuickSortLomutoKRMiddle(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 

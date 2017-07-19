@@ -14,6 +14,8 @@ void QuickSortLomutoCLRSRight(int array[], int size);
 
 void QuickSortLomutoCLRSEqualityFixMiddle(int array[], int size);
 
+void QuickSortLomutoKRMiddle(int array[], int size);
+
 void QuickSortHoareMiddle(int array[], int size);
 void QuickSortHoareLeft(int array[], int size);
 void QuickSortHoareRight(int array[], int size);
