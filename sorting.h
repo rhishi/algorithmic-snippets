@@ -22,4 +22,7 @@ void QuickSortHoareTwoMedianThreeInMiddle(int array[], int size);
 void QuickSortHoareTwoMedianThree(int array[], int size);
 void QuickSortHoareTwoMiddle(int array[], int size);
 
+void MedianInMiddle(int array[], int i, int j, int k);
+int MedianIndex(int array[], int i, int j, int k);
+
 #endif // #ifndef SORTING_H_
