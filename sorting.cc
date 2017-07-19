@@ -318,9 +318,9 @@ void MedianInMiddle(int array[], int i, int j, int k) {
     }
     if (array[j] > array[k]) {
         Swap(array, j, k);
-    }
-    if (array[i] > array[j]) {
-        Swap(array, i, j);
+        if (array[i] > array[j]) {
+            Swap(array, i, j);
+        }
     }
 }
 
