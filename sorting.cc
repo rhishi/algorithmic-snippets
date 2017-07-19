@@ -312,7 +312,7 @@ int PartitionHoare(int array[], int left, int pivot, int right) {
 // Hoare Partition that returns two indices as partition dividers.
 
 // Sorts the elements at the three indices bringing the median at the middle index.
-void median_in_middle(int array[], int i, int j, int k) {
+void MedianInMiddle(int array[], int i, int j, int k) {
     if (array[i] > array[j]) {
         Swap(array, i, j);
     }
@@ -326,7 +326,7 @@ void median_in_middle(int array[], int i, int j, int k) {
 
 // Finds the index of the median of three elements.
 // Does an insertion sort, with pretend-swaps.
-int median_index(int array[], int i, int j, int k) {
+int MedianIndex(int array[], int i, int j, int k) {
     // i, j, k
     if (array[i] > array[j]) {
         // j, i, k;
@@ -375,7 +375,7 @@ void QuickSortHoareTwoMedianThreeInMiddle(int array[], int left, int right) {
     if (left >= right) return;
 
     int middle = left + (right - left) / 2;
-    median_in_middle(array, left, middle, right);
+    MedianInMiddle(array, left, middle, right);
     int pivot = middle;
     int partleft, partright;
     PartitionHoareTwo(array, left, pivot, right, partleft, partright);
@@ -392,7 +392,7 @@ void QuickSortHoareTwoMedianThree(int array[], int left, int right) {
     if (left >= right) return;
 
     int middle = left + (right - left) / 2;
-    int pivot = median_index(array, left, middle, right);
+    int pivot = MedianIndex(array, left, middle, right);
     int partleft, partright;
     PartitionHoareTwo(array, left, pivot, right, partleft, partright);
 
