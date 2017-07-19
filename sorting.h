@@ -25,4 +25,11 @@ void QuickSortHoareTwoMiddle(int array[], int size);
 void MedianInMiddle(int array[], int i, int j, int k);
 int MedianIndex(int array[], int i, int j, int k);
 
+void InsertionSort(int array[], int size);
+void SelectionSort(int array[], int size);
+void BubbleSortUp(int array[], int size);
+void BubbleSortDown(int array[], int size);
+void BubbleSortUpJumpDownToLastSwap(int array[], int size);
+void BubbleSortDownJumpUpToLastSwap(int array[], int size);
+
 #endif // #ifndef SORTING_H_

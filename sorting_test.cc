@@ -341,6 +341,38 @@ TEST_P(SortTestWithExamples, QuickSortHoareTwoMedianThreeInMiddle) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+// ------------------------------------------
+
+TEST_P(SortTestWithExamples, InsertionSort) {
+    InsertionSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, SelectionSort) {
+    SelectionSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, BubbleSortUp) {
+    BubbleSortUp(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, BubbleSortDown) {
+    BubbleSortDown(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, BubbleSortUpJumpDownToLastSwap) {
+    BubbleSortUpJumpDownToLastSwap(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, BubbleSortDownJumpUpToLastSwap) {
+    BubbleSortDownJumpUpToLastSwap(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 13));
 
 // -----------------------------------------------------------------------------
@@ -463,6 +495,38 @@ TEST_P(SortTestWithPatterns, QuickSortHoareTwoMedianThree) {
 
 TEST_P(SortTestWithPatterns, QuickSortHoareTwoMedianThreeInMiddle) {
     QuickSortHoareTwoMedianThreeInMiddle(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+// ------------------------------------------
+
+TEST_P(SortTestWithPatterns, InsertionSort) {
+    InsertionSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, SelectionSort) {
+    SelectionSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, BubbleSortUp) {
+    BubbleSortUp(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, BubbleSortDown) {
+    BubbleSortDown(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, BubbleSortUpJumpDownToLastSwap) {
+    BubbleSortUpJumpDownToLastSwap(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, BubbleSortDownJumpUpToLastSwap) {
+    BubbleSortDownJumpUpToLastSwap(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 

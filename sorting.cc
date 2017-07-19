@@ -457,3 +457,87 @@ void PartitionHoareTwo(int array[], int left, int pivot, int right, int& partlef
     partleft = i - 1;
     partright = j + 1;
 }
+
+// -----------------------------------------------------------------------------
+
+void InsertionSort(int array[], int size) {
+    // Insert ith element in sorted range 0..(i-1),
+    // for successively increasing i from 1 to size-1.
+    for (int i = 1; i < size; i++) {
+        int element = array[i];
+        int j = i - 1;
+        while (j >= 0 && array[j] > element) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = element;
+    }
+}
+
+void SelectionSort(int array[], int size) {
+    // find a minimum element of range i..(size-1) and swap it with ith element,
+    // for successively increasing i from 0 to (size-2).
+    for (int i = 0; i < size - 1; i++) {
+        int min_index = i;
+        for(int j = i + 1; j < size; j++) {
+            if (array[j] < array[min_index]) {
+                min_index = j;
+            }
+        }
+        Swap(array, i, min_index);
+    }
+}
+
+void BubbleSortUp(int array[], int size) {
+    // bubble up a maximum element of range 0..(i-1) i.e. sub-array of size i
+    // for successively decreasing sizes i = size to 2.
+    for (int i = size; i > 1; i--) {
+        for (int j = 1; j < i; j++) {
+            if (array[j - 1] > array[j]) {
+                Swap(array, j - 1, j);
+            }
+        }
+    }
+}
+
+void BubbleSortDown(int array[], int size) {
+    // bubble down a minimum element of range i..(size-1) i.e. sub-array of size (size-i)
+    // for successively increasing start index i = 0 to (size-2).
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = size - 1; j > i; j--) {
+            if (array[j - 1] > array[j]) {
+                Swap(array, j - 1, j);
+            }
+        }
+    }
+}
+
+void BubbleSortUpJumpDownToLastSwap(int array[], int size) {
+    // data-dependent optimization to bubble up
+    // becomes O(n) for already-sorted input (like InsertionSort)
+    int nexti;
+    for (int i = size; i > 1; i = nexti) {
+        nexti = 0;
+        for (int j = 1; j < i; j++) {
+            if (array[j - 1] > array[j]) {
+                Swap(array, j - 1, j);
+                nexti = j;
+            }
+        }
+    }
+}
+
+void BubbleSortDownJumpUpToLastSwap(int array[], int size) {
+    // data-dependent optimization to bubble down
+    // becomes O(n) for already-sorted input (like InsertionSort)
+    int nexti;
+    for (int i = 0; i < size - 1; i = nexti) {
+        nexti = size;
+        for (int j = size - 1; j > i; j--) {
+            if (array[j - 1] > array[j]) {
+                Swap(array, j - 1, j);
+                nexti = j;
+            }
+        }
+    }
+}
