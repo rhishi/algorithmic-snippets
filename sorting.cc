@@ -4,9 +4,10 @@
 // Utility functions related to sorting
 
 bool IsSorted(int array[], int size) {
-    if (size <= 1) return true;
-    for (int i = 0; i < size - 1; i++) {
-        if (array[i] > array[i + 1]) return false;
+    for (int i = 1; i < size; i++) {
+        if (array[i - 1] > array[i]) {
+            return false;
+        }
     }
     return true;
 }
