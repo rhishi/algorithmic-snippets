@@ -505,6 +505,71 @@ TEST(DummyTest, CombineIsNotSupportedOnThisPlatform) {}
 
 #endif  // GTEST_HAS_COMBINE
 
+// -----------------------------------------------------------------------------
+// Tests for the small functions MedianInMiddle and MedianIndex
+
+TEST(MedianTest, MedianInMiddle) {
+    int examples[][3] = {
+        { 1, 2, 3 },
+        { 2, 1, 3 },
+        { 2, 3, 1 },
+        { 3, 2, 1 },
+        { 3, 1, 2 },
+        { 1, 3, 2 },
+
+        { 1, 1, 3 },
+        { 2, 1, 2 },
+        { 2, 3, 3 },
+
+        { 3, 3, 1 },
+        { 1, 2, 1 },
+        { 3, 2, 2 },
+
+        { 1, 1, 1 }
+    };
+    int medians[] = {
+        2, 2, 2, 2, 2, 2,
+        1, 2, 3,
+        3, 1, 2,
+        1
+    };
+    for (int i = 0; i < 13; i++) {
+        MedianInMiddle(examples[i], 0, 1, 2);
+        EXPECT_EQ(medians[i], examples[i][1]);
+    }
+}
+
+TEST(MedianTest, MedianIndex) {
+    int examples[][3] = {
+        { 1, 2, 3 },
+        { 2, 1, 3 },
+        { 2, 3, 1 },
+        { 3, 2, 1 },
+        { 3, 1, 2 },
+        { 1, 3, 2 },
+
+        { 1, 1, 3 },
+        { 2, 1, 2 },
+        { 2, 3, 3 },
+
+        { 3, 3, 1 },
+        { 1, 2, 1 },
+        { 3, 2, 2 },
+
+        { 1, 1, 1 }
+    };
+    int median_indices[] = {
+        1, 0, 0, 1, 2, 2,
+        1, 0, 1,
+        0, 2, 2,
+        1
+    };
+    for (int i = 0; i < 13; i++) {
+        int index = MedianIndex(examples[i], 0, 1, 2);
+        EXPECT_EQ(median_indices[i], index);
+    }
+}
+
 #else
 
 // Google Test may not support value-parameterized tests with some
