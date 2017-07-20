@@ -378,6 +378,18 @@ TEST_P(SortTestWithExamples, BubbleSortDownJumpUpToLastSwap) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+// ------------------------------------------
+
+TEST_P(SortTestWithExamples, MergeSortRecursive) {
+    MergeSortRecursive(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithExamples, MergeSort) {
+    MergeSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 13));
 
 // -----------------------------------------------------------------------------
@@ -537,6 +549,18 @@ TEST_P(SortTestWithPatterns, BubbleSortUpJumpDownToLastSwap) {
 
 TEST_P(SortTestWithPatterns, BubbleSortDownJumpUpToLastSwap) {
     BubbleSortDownJumpUpToLastSwap(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+// ------------------------------------------
+
+TEST_P(SortTestWithPatterns, MergeSortRecursive) {
+    MergeSortRecursive(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, MergeSort) {
+    MergeSort(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 

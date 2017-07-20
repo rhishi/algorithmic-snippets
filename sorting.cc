@@ -585,3 +585,100 @@ void BubbleSortDownJumpUpToLastSwap(int array[], int size) {
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// MergeSort.  Recursive and Non-recursive nested loops.
+
+void MergeSortRecursive(int array[], int left, int right);
+void Merge(int array[], int left, int middle, int right);
+
+void MergeSortRecursive(int array[], int size) {
+    MergeSortRecursive(array, 0, size - 1);
+}
+
+void MergeSortRecursive(int array[], int left, int right) {
+    if (left >= right) return;
+
+    int middle = left + (right - left) / 2;
+
+    MergeSortRecursive(array, left, middle);
+    MergeSortRecursive(array, middle + 1, right);
+    Merge(array, left, middle, right);
+}
+
+void Merge(int array[], int left, int middle, int right) {
+    int leftsize = middle - left + 1;
+    int* leftarray = new int[leftsize];
+    for (int i = 0; i < leftsize; i++) {
+        leftarray[i] = array[i + left];
+    }
+
+    int rightsize = right - middle;
+    int* rightarray = new int[rightsize];
+    for (int i = 0; i < rightsize; i++) {
+        rightarray[i] = array[i + middle + 1];
+    }
+
+    int l = 0;
+    int r = 0;
+    for (int k = left; k <= right; k++) {
+        if (l < leftsize && (r >= rightsize || leftarray[l] <= rightarray[r])) {
+            array[k] = leftarray[l];
+            l++;
+        } else { // r < rightsize && (l >= leftsize || rightarray[r] < leftarray[l])
+            array[k] = rightarray[r];
+            r++;
+        }
+    }
+
+    delete[] leftarray;
+    delete[] rightarray;
+}
+
+int min(int x, int y);
+void Merge(int input[], int left, int middle, int right, int output[]);
+
+void MergeSort(int array[], int size) {
+    int* temp = new int[size];
+
+    bool array_to_temp = false;
+    for (int s = 1; s < size; s *= 2) {
+        array_to_temp = !array_to_temp;
+        for (int i = 0; i < size; i += 2 * s) {
+            int left = i;
+            int middle = min(i + s - 1, size - 1);
+            int right = min(i + 2 * s - 1, size - 1);
+            if (array_to_temp) {
+                Merge(array, left, middle, right, temp);
+            } else {
+                Merge(temp, left, middle, right, array);
+            }
+        }
+    }
+
+    if (array_to_temp) {
+        for (int i = 0; i < size; i++) {
+            array[i] = temp[i];
+        }
+    }
+
+    delete[] temp;
+}
+
+int min(int x, int y) {
+    return x < y ? x : y;
+}
+
+void Merge(int input[], int left, int middle, int right, int output[]) {
+    int l = left;
+    int r = middle + 1;
+    for (int k = left; k <= right; k++) {
+        if (l <= middle && (r > right || input[l] <= input[r])) {
+            output[k] = input[l];
+            l++;
+        } else { // r <= right && (l > middle || input[r] < input[l])
+            output[k] = input[r];
+            r++;
+        }
+    }
+}

@@ -34,4 +34,7 @@ void BubbleSortDown(int array[], int size);
 void BubbleSortUpJumpDownToLastSwap(int array[], int size);
 void BubbleSortDownJumpUpToLastSwap(int array[], int size);
 
+void MergeSortRecursive(int array[], int size);
+void MergeSort(int array[], int size);
+
 #endif // #ifndef SORTING_H_
