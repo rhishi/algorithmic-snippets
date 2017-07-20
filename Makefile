@@ -2,7 +2,7 @@
 CXX = g++-7
 CXXFLAGS = -Wall
 
-MAINS = sorting_main
+MAINS = sorting_main binarytree_main
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
