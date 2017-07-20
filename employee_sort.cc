@@ -40,11 +40,21 @@ std::ostream& operator<< (std::ostream& os, const Employee& employee) {
     return os;
 }
 
+// compare first by salary, and then name
 bool operator< (const Employee& e1, const Employee& e2) {
     return e1.salary < e2.salary || (e1.salary == e2.salary && e1.name < e2.name);
 }
 
+// !(e1 < e2) is supposed to be e1 >= e2
+//     !(e1 < e2)
+// is  !(e1.salary < e2.salary || (e1.salary == e2.salary && e1.name < e2.name))
+// i.e.  e1.salary >= e2.salary && (e1.salary != e2.salary || e1.name >= e2.name)
+// i.e. (e1.salary >= e2.salary && e1.salary != e2.salary) || (e1.salary >= e2.salary && e1.name >= e2.name)
+// i.e.  e1.salary > e2.salary || (e1.salary >= e2.salary && e1.name >= e2.name)
+// i.e.  e1.salary > e2.salary || (e1.salary == e2.salary && e1.name >= e2.name)
+
 bool operator<= (const Employee& e1, const Employee& e2) {
+    // e1 <= e2 is negation of e1 > e2 i.e. e2 < e1
     return !(e2 < e1);
 }
 
@@ -89,6 +99,17 @@ void Merge(std::vector<Employee>& input, size_type left, size_type middle, size_
         } else { // j_in_range && (!i_in_range || input[j] < input[i])
             output[k++] = input[j++];
         }
+        // Deciphering the else predicate:
+        //     !(i_in_range && (!j_in_range || input[i] <= input[j]))
+        // i.e. !i_in_range || (j_in_range && input[i] > input[j])
+        // i.e. (!i_in_range || j_in_range) && (!i_in_range && input[i] > input[j])
+        //
+        // combine that with
+        //   !(!i_in_range && !j_in_range)
+        // i.e. i_in_range || j_in_range
+        //
+        //     (i_in_range || j_in_range) && (!i_in_range || j_in_range)
+        // i.e. j_in_range
     }
 }
 
