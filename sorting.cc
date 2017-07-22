@@ -318,7 +318,7 @@ int PartitionHoare(int array[], int left, int pivot, int right) {
     // (i+1)..(j-1) are elements yet to be scanned.
     // intential that the pivot element is included in the scan.
 
-    while(1) {
+    while (1) {
         // no need for bounds check on i and j as they advance, because
         // 1) in the first iteration, unscanned part contains the pivot element.
         // 2) in the later iterations, i (j) cannot go past the old value of j (i).
@@ -471,7 +471,7 @@ void PartitionHoareTwo(int array[], int left, int pivot, int right, int& partlef
     // (i+1)..(j-1) are elements yet to be scanned.
     // intential that the pivot element is included in the scan.
 
-    while(1) {
+    while (1) {
         // no need for bounds check on i and j as they advance, because
         // 1) in the first iteration, unscanned part contains the pivot element.
         // 2) i (or j) cannot go past the old value of j (or i)
