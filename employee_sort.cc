@@ -21,6 +21,7 @@
 
   v0 (2017.07): My own MergeSort that failed on not-power-of-2 sizes.  Marked incorrect by GfG.
   v1 (2017.07): My own correct MergeSort. Marked correct by GfG. Full program mode.
+      Compile & Run: g++-7 -Wall -Wextra -std=c++14 employee_sort.cc && ./a.out
 */
 
 #include <iostream>
