@@ -390,6 +390,11 @@ TEST_P(SortTestWithExamples, MergeSort) {
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 
+TEST_P(SortTestWithExamples, HeapSort) {
+    HeapSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
 INSTANTIATE_TEST_CASE_P(InstantiateOnRange, SortTestWithExamples, ::testing::Range(0, 13));
 
 // -----------------------------------------------------------------------------
@@ -561,6 +566,11 @@ TEST_P(SortTestWithPatterns, MergeSortRecursive) {
 
 TEST_P(SortTestWithPatterns, MergeSort) {
     MergeSort(array_, size_);
+    EXPECT_TRUE(IsSorted(array_, size_));
+}
+
+TEST_P(SortTestWithPatterns, HeapSort) {
+    HeapSort(array_, size_);
     EXPECT_TRUE(IsSorted(array_, size_));
 }
 

@@ -682,3 +682,83 @@ void Merge(int input[], int left, int middle, int right, int output[]) {
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// HeapSort.  My own attempt based on hint from CLRS: InsertionSort is in-place
+// but sub-optimal, MergeSort is optimal but requires additional storage.
+// HeapSort combines the two desirable properties, being in-place and optimal.
+// Also with a quick overview from CtCI of Heap using Binary Tree.
+// And finally, vaguely remembering that a binary tree can be stored in an array.
+
+struct MaxHeapUsingArray {
+    int* array;
+    int size;
+    int count;
+
+    void Insert(int value) {
+        if (count >= size) return;
+
+        array[count++] = value;
+
+        int index = count - 1;
+        int parent = (index - 1) / 2;
+
+        while (parent >= 0 && array[index] > array[parent]) {
+            Swap(array, parent, index);
+            index = parent;
+            parent = (index - 1) / 2;
+        }
+    }
+
+    int Pop() {
+        if (count <= 0) return -1234; // TODO: throw exception
+
+        Swap(array, 0, count - 1);
+        count--;
+
+        if (count == 0) return array[count];
+
+        int index = 0;
+
+        while (1) {
+            int left = 2 * index + 1;
+            int right = left + 1;
+
+            bool leftvalid = left < count;
+            bool rightvalid = right < count;
+            bool leftinversion = leftvalid && array[left] > array[index];
+            bool rightinversion = rightvalid && array[right] > array[index];
+
+            if (leftinversion && rightinversion) {
+                if (array[left] >= array[right]) {
+                    Swap(array, index, left);
+                    index = left;
+                } else {
+                    Swap(array, index, right);
+                    index = right;
+                }
+            } else if (leftinversion) {
+                Swap(array, index, left);
+                index = left;
+            } else if (rightinversion) {
+                Swap(array, index, right);
+                index = right;
+            } else {
+                break;
+            }
+        }
+
+        return array[count];
+    }
+};
+
+void HeapSort(int array[], int size) {
+    MaxHeapUsingArray heap { array, size, 0 };
+
+    for (int i = 0; i < size; i++) {
+        heap.Insert(array[i]);
+    }
+    for (int i = size; i-- > 0; ) {
+        array[i] = heap.Pop();
+    }
+}
