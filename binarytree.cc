@@ -1,5 +1,8 @@
 #include "binarytree.h"
 
+#include <iostream>
+#include <stack>
+
 // Inserts a new node in a binary tree given the root node, a value for the new
 // node, and a character string denoting its position in the tree.
 //
@@ -59,10 +62,36 @@ BinaryTreeNode* BinaryTreeAddNewNode(BinaryTreeNode* root, int value, const char
     return root;
 }
 
-std::string BinaryTreePreOrderString(BinaryTreeNode* root) {
-    if (root == nullptr) return "";
+void BinaryTreePrintNode(BinaryTreeNode* node) {
+    std::cout << node->value << " ";
+}
 
-    return std::to_string(root->value) + " "
-        + BinaryTreePreOrderString(root->left)
-        + BinaryTreePreOrderString(root->right);
+void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root) {
+    if (root == nullptr) return;
+
+    BinaryTreePrintNode(root);
+    BinaryTreePrintPreOrderRecursive(root->left);
+    BinaryTreePrintPreOrderRecursive(root->right);
+}
+
+void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root) {
+    std::stack<BinaryTreeNode*> stack;
+
+    if (root != nullptr) {
+        stack.push(root);
+    }
+
+    while (!stack.empty()) {
+        auto node = stack.top();
+        stack.pop();
+
+        BinaryTreePrintNode(node);
+
+        if (node->right != nullptr) {
+            stack.push(node->right);
+        }
+        if (node->left != nullptr) {
+            stack.push(node->left);
+        }
+    }
 }

@@ -11,9 +11,23 @@ int main() {
     // 1 2 3
     // 1 2 3 4
     // 1 2 4 5 3
-    std::cout << BinaryTreePreOrderString(MakeSimpleThreeTree()) << std::endl;
-    std::cout << BinaryTreePreOrderString(MakeSimpleFourTree()) << std::endl;
-    std::cout << BinaryTreePreOrderString(MakeSimpleFiveTree()) << std::endl;
+    BinaryTreePrintPreOrderRecursive(MakeSimpleThreeTree());
+    std::cout << std::endl;
+    BinaryTreePrintPreOrderRecursive(MakeSimpleFourTree());
+    std::cout << std::endl;
+    BinaryTreePrintPreOrderRecursive(MakeSimpleFiveTree());
+    std::cout << std::endl;
+
+    // prints
+    // 1 2 3
+    // 1 2 3 4
+    // 1 2 4 5 3
+    BinaryTreePrintPreOrderNonRecursive(MakeSimpleThreeTree());
+    std::cout << std::endl;
+    BinaryTreePrintPreOrderNonRecursive(MakeSimpleFourTree());
+    std::cout << std::endl;
+    BinaryTreePrintPreOrderNonRecursive(MakeSimpleFiveTree());
+    std::cout << std::endl;
 
     return 0;
 }
