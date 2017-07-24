@@ -696,7 +696,7 @@ struct MaxHeapUsingArray {
     int count;
 
     void Insert(int value) {
-        if (count >= size) return;
+        if (count >= size) return; // TODO: throw exception
 
         array[count++] = value;
 
