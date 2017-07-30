@@ -1,7 +1,6 @@
-#include "binarytree.h"
-
-#include <iostream>
+#include <ostream>
 #include <stack>
+#include "binarytree.h"
 
 // Inserts a new node in a binary tree given the root node, a value for the new
 // node, and a character string denoting its position in the tree.
@@ -62,35 +61,42 @@ BinaryTreeNode* BinaryTreeAddNewNode(BinaryTreeNode* root, int value, const char
     return root;
 }
 
-void BinaryTreePrintNode(BinaryTreeNode* node) {
-    std::cout << node->value << " ";
+void BinaryTreeDelete(BinaryTreeNode* root) {
+    if (root == nullptr) return;
+    BinaryTreeDelete(root->left);
+    BinaryTreeDelete(root->right);
+    delete root;
 }
 
-void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root) {
+void BinaryTreePrintNode(BinaryTreeNode* node, std::ostream& os) {
+    os << node->value << " ";
+}
+
+void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root, std::ostream& os) {
     if (root == nullptr) return;
 
-    BinaryTreePrintNode(root);
-    BinaryTreePrintPreOrderRecursive(root->left);
-    BinaryTreePrintPreOrderRecursive(root->right);
+    BinaryTreePrintNode(root, os);
+    BinaryTreePrintPreOrderRecursive(root->left, os);
+    BinaryTreePrintPreOrderRecursive(root->right, os);
 }
 
-void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root) {
+void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root, std::ostream& os) {
     if (root == nullptr) return;
 
-    BinaryTreePrintInOrderRecursive(root->left);
-    BinaryTreePrintNode(root);
-    BinaryTreePrintInOrderRecursive(root->right);
+    BinaryTreePrintInOrderRecursive(root->left, os);
+    BinaryTreePrintNode(root, os);
+    BinaryTreePrintInOrderRecursive(root->right, os);
 }
 
-void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root) {
+void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root, std::ostream& os) {
     if (root == nullptr) return;
 
-    BinaryTreePrintPostOrderRecursive(root->left);
-    BinaryTreePrintPostOrderRecursive(root->right);
-    BinaryTreePrintNode(root);
+    BinaryTreePrintPostOrderRecursive(root->left, os);
+    BinaryTreePrintPostOrderRecursive(root->right, os);
+    BinaryTreePrintNode(root, os);
 }
 
-void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root) {
+void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root, std::ostream& os) {
     std::stack<BinaryTreeNode*> stack;
 
     if (root != nullptr) {
@@ -101,7 +107,7 @@ void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root) {
         auto node = stack.top();
         stack.pop();
 
-        BinaryTreePrintNode(node);
+        BinaryTreePrintNode(node, os);
 
         if (node->right != nullptr) {
             stack.push(node->right);

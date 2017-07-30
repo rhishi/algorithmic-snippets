@@ -6,7 +6,7 @@ MAINS = sorting_main binarytree_main
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = sorting_test
+TESTS = sorting_test binarytree_test
 
 all : $(MAINS) $(TESTS)
 
@@ -69,3 +69,10 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 %.o : %.cc %.h
 	$(CXX) $(CXXFLAGS) -c $<
+
+
+binarytree_test : binarytree_test.o binarytree.o binarytreeexamples.o gtest_main.a
+	$(CXX) $(GTEST_CPPFLAGS) $(GTEST_CXXFLAGS) -o $@ $^
+
+binarytree_main : binarytree_main.o binarytree.o binarytreeexamples.o
+	$(CXX) $(CXXFLAGS) -o $@ $^

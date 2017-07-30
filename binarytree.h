@@ -1,6 +1,8 @@
 #ifndef BINARYTREE_H_
 #define BINARYTREE_H_
 
+#include <ostream>
+
 // First, the absolute basics of C, C++.  For a node of a binary tree, we need
 // a struct (or a class, but struct makes members public by default, and just
 // seems more natural, small-scale).  That struct needs to refer to other two
@@ -38,10 +40,12 @@ struct BinaryTreeNode {
 
 BinaryTreeNode* BinaryTreeAddNewNode(BinaryTreeNode* root, int value, const char * const position);
 
-void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root);
-void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root);
-void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root);
+void BinaryTreeDelete(BinaryTreeNode* root);
 
-void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root);
+void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root, std::ostream& os);
+
+void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root, std::ostream& os);
 
 #endif // #ifndef BINARYTREE_H_
