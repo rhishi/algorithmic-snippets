@@ -39,6 +39,8 @@ struct BinaryTreeNode {
 BinaryTreeNode* BinaryTreeAddNewNode(BinaryTreeNode* root, int value, const char * const position);
 
 void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root);
+void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root);
+void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root);
 
 void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root);
 

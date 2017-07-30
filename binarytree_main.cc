@@ -7,7 +7,7 @@ BinaryTreeNode* MakeSimpleFiveTree();
 
 int main() {
 
-    // prints
+    // prints pre-order
     // 1 2 3
     // 1 2 3 4
     // 1 2 4 5 3
@@ -16,6 +16,31 @@ int main() {
     BinaryTreePrintPreOrderRecursive(MakeSimpleFourTree());
     std::cout << std::endl;
     BinaryTreePrintPreOrderRecursive(MakeSimpleFiveTree());
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    // prints in-order
+    // 2 1 3
+    // 2 1 4 3
+    // 4 2 5 1 3
+    BinaryTreePrintInOrderRecursive(MakeSimpleThreeTree());
+    std::cout << std::endl;
+    BinaryTreePrintInOrderRecursive(MakeSimpleFourTree());
+    std::cout << std::endl;
+    BinaryTreePrintInOrderRecursive(MakeSimpleFiveTree());
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    // prints post-order
+    // 2 3 1
+    // 2 4 3 1
+    // 4 5 2 3 1
+    BinaryTreePrintPostOrderRecursive(MakeSimpleThreeTree());
+    std::cout << std::endl;
+    BinaryTreePrintPostOrderRecursive(MakeSimpleFourTree());
+    std::cout << std::endl;
+    BinaryTreePrintPostOrderRecursive(MakeSimpleFiveTree());
+    std::cout << std::endl;
     std::cout << std::endl;
 
     // prints

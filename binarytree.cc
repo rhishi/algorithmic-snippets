@@ -74,6 +74,22 @@ void BinaryTreePrintPreOrderRecursive(BinaryTreeNode* root) {
     BinaryTreePrintPreOrderRecursive(root->right);
 }
 
+void BinaryTreePrintInOrderRecursive(BinaryTreeNode* root) {
+    if (root == nullptr) return;
+
+    BinaryTreePrintInOrderRecursive(root->left);
+    BinaryTreePrintNode(root);
+    BinaryTreePrintInOrderRecursive(root->right);
+}
+
+void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root) {
+    if (root == nullptr) return;
+
+    BinaryTreePrintPostOrderRecursive(root->left);
+    BinaryTreePrintPostOrderRecursive(root->right);
+    BinaryTreePrintNode(root);
+}
+
 void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root) {
     std::stack<BinaryTreeNode*> stack;
 
