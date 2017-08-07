@@ -48,4 +48,17 @@ void BinaryTreePrintPostOrderRecursive(BinaryTreeNode* root, std::ostream& os);
 
 void BinaryTreePrintPreOrderNonRecursive(BinaryTreeNode* root, std::ostream& os);
 
+void BinaryTreePrintInOrderNonRecursiveStackAndMap(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderNonRecursiveStackOfPair(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintPostOrderNonRecursiveStackOfPair(BinaryTreeNode* root, std::ostream& os);
+
+void BinaryTreePrintInOrderNonRecursiveStackOfPair2(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderNonRecursiveStackOfPair3(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderNonRecursiveStackOfPair4(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderNonRecursiveStackOfPair5(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintInOrderNonRecursiveStackOfPair6(BinaryTreeNode* root, std::ostream& os);
+
+void BinaryTreePrintInOrderNonRecursive(BinaryTreeNode* root, std::ostream& os);
+void BinaryTreePrintPostOrderNonRecursive(BinaryTreeNode* root, std::ostream& os);
+
 #endif // #ifndef BINARYTREE_H_

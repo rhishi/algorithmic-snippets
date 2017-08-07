@@ -85,6 +85,7 @@ std::unordered_map<std::string, std::string> BinaryTreeTestWithExamples::expecte
 std::unordered_map<std::string, std::string> BinaryTreeTestWithExamples::expected_inorder_;
 std::unordered_map<std::string, std::string> BinaryTreeTestWithExamples::expected_postorder_;
 
+// -------------------------------------------------------------------
 
 TEST_P(BinaryTreeTestWithExamples, PreOrderRecursive) {
     std::ostringstream os;
@@ -110,10 +111,96 @@ TEST_P(BinaryTreeTestWithExamples, PostOrderRecursive) {
     EXPECT_EQ(expected, actual);
 }
 
+// -------------------------------------------------------------------
+
 TEST_P(BinaryTreeTestWithExamples, PreOrderNonRecursive) {
     std::ostringstream os;
     BinaryTreePrintPreOrderNonRecursive(root_, os);
     auto expected = expected_preorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackAndMap) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackAndMap(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, PostOrderNonRecursiveStackOfPair) {
+    std::ostringstream os;
+    BinaryTreePrintPostOrderNonRecursiveStackOfPair(root_, os);
+    auto expected = expected_postorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+// -------------------------------------------------------------------
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair2) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair2(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair3) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair3(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair4) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair4(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair5) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair5(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursiveStackOfPair6) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursiveStackOfPair6(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+// -------------------------------------------------------------------
+
+TEST_P(BinaryTreeTestWithExamples, InOrderNonRecursive) {
+    std::ostringstream os;
+    BinaryTreePrintInOrderNonRecursive(root_, os);
+    auto expected = expected_inorder_[GetParam()];
+    auto actual = os.str();
+    EXPECT_EQ(expected, actual);
+}
+
+TEST_P(BinaryTreeTestWithExamples, PostOrderNonRecursive) {
+    std::ostringstream os;
+    BinaryTreePrintPostOrderNonRecursive(root_, os);
+    auto expected = expected_postorder_[GetParam()];
     auto actual = os.str();
     EXPECT_EQ(expected, actual);
 }
